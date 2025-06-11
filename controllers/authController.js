@@ -1,5 +1,5 @@
 import { comparePassword, hashPassword } from "../helpers/authHelper.js";
-import userModel from "../models/userModel.js";
+
 import JWT from "jsonwebtoken";
 export const registerController = async(req,res)=>{
     try{
@@ -101,22 +101,3 @@ export const testController = (req,res)=>{
     res.send("Protected Routes");
 }
 
-export const isAdmin = async (req,res,next)=>{
-    try{
-        const user = await userModel.findById(req.user._id)
-        if(user.role !==1){
-            return res.status(401).send({
-                success:false,
-                message:"UnAuthorized Access",
-            })
-        }
-        else{
-            next()
-        }
-        
-    }
-    catch(error){
-        console.log(error);
-        
-    }
-}
